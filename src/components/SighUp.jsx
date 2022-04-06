@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import SubHeader from './SubHeader';
+import { useNavigate } from 'react-router';
 
 const SighUp = () => {
   const [input, setInput] = useState({
@@ -15,6 +17,7 @@ const SighUp = () => {
     passwordError: '',
   });
   const { userNameError, emailOrPhoneError, passwordError } = errorMessage;
+  const navigate = useNavigate();
   const checkUserName = (value) => {
     if (value.length > 0) {
       setErrorMessage({ ...errorMessage, userNameError: '' });
@@ -90,30 +93,30 @@ const SighUp = () => {
   };
   return (
     <Wrap>
+      <SubHeader text="회원가입" onClick={() => navigate('/')} />
       <Form action="submit">
-        <ProductName>회원가입</ProductName>
-        <Section>
+        <div>
           <Title>회원명</Title>
           <Label htmlFor="userName" error={userNameError}>
             {userNameError ? userNameError : '20자 이내'}
             <Input type="text" id="userName" value={userName} onChange={handleChange} maxLength={20} />
           </Label>
-        </Section>
-        <Section>
+        </div>
+        <div>
           <Title>이메일 주소 또는 폰번호</Title>
           <Label htmlFor="emailOrPhone" error={emailOrPhoneError}>
             {emailOrPhoneError ? emailOrPhoneError : '이메일 주소와 폰 번호(숫자만) 중 택 1'}
             <Input type="text" id="emailOrPhone" value={emailOrPhone} onChange={handleChange} />
           </Label>
-        </Section>
-        <Section>
+        </div>
+        <div>
           <Title>비밀번호</Title>
           <Label htmlFor="password" error={passwordError}>
             {passwordError ? passwordError : '8자 이상, 영소문자/대문자, 숫자, 특수문자 조합'}
             <Input type="password" id="password" value={password} onChange={handleChange} minLength={8} />
           </Label>
-        </Section>
-        <Section>
+        </div>
+        <div>
           <Title>자기소개(선택)</Title>
           <Label htmlFor="introduction">
             512자 이내
@@ -127,7 +130,7 @@ const SighUp = () => {
               onChange={handleChange}
             />
           </Label>
-        </Section>
+        </div>
         <SignUpButton onClick={handleClickSignUp} disable={checkValidation()}>
           회원가입
         </SignUpButton>
@@ -148,14 +151,8 @@ const Form = styled.form`
   padding: 2rem;
 `;
 
-const Section = styled.div``;
-
-const ProductName = styled.h1`
-  font-weight: 700;
-  margin-bottom: 1rem;
-`;
-
 const Title = styled.h1`
+  font-weight: 600;
   margin-bottom: 0.5rem;
 `;
 
