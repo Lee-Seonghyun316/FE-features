@@ -23,6 +23,7 @@ const color = {
   white: '#FFFFFF',
   lightGrey: '#eeeeee',
   grey: '#bdbdbd',
+  purple: '#663399',
 };
 
 const theme = {
