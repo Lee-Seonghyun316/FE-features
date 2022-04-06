@@ -15,7 +15,7 @@ const pixelToRem = (size) => `${size / 16}rem`;
 const fontSize = {
   big: pixelToRem(25),
   middle: pixelToRem(20),
-  Small: pixelToRem(15),
+  xSmall: pixelToRem(15),
 };
 
 const color = {

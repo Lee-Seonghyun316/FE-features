@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import { CreateFragmentData } from '../data/mockData';
 import { faEnvelope, faUser, faVenusMars, faWifi } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Header from './Header';
+import { useNavigate } from 'react-router';
 
 const Home = () => {
   const [target, setTarget] = useState(null);
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     let observer;
     if (target) {
@@ -29,6 +32,7 @@ const Home = () => {
   }, [page]);
   return (
     <div>
+      <Header onClick={() => navigate('/sign-up')} />
       <Items>
         {data.map((item) => (
           <Item key={item.id}>
@@ -68,7 +72,7 @@ const Items = styled.ul`
   justify-content: center;
   padding: 5vw 0;
   background-color: ${({ theme }) => theme.color.lightGrey};
-  font-size: ${({ theme }) => theme.fontSize.Small};
+  font-size: ${({ theme }) => theme.fontSize.xSmall};
 `;
 const Item = styled.li`
   width: 35vw;
