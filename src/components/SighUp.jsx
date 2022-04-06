@@ -34,7 +34,7 @@ const SighUp = () => {
     const regEng = /[a-z]/gi;
     const regSpe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
     if (regNum.test(value) && regEng.test(value) && regSpe.test(value)) {
-      if (password.length < 8) {
+      if (value.length < 8) {
         setErrorMessage({ ...errorMessage, passwordError: '8자 이상:(' });
       } else {
         setErrorMessage({ ...errorMessage, passwordError: '' });
@@ -86,7 +86,7 @@ const SighUp = () => {
       setErrorMessage({ ...errorMessage, passwordError: '필수요소:(' });
       return;
     }
-    console.log('회원가입');
+    console.log('회원가입완료:)');
   };
   return (
     <Wrap>
