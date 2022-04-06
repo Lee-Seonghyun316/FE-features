@@ -1,6 +1,7 @@
 ## Description
 
 - Infinite scrolling, form 유효성 검사, 로그인 등의 FE 기능을 구현하였습니다.
+- 배포주소 : https://frontend-features-2nvqfbix6-mn031621019-gmailcom.vercel.app/sign-in
 
 ## Usage
 
