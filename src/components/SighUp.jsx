@@ -98,7 +98,10 @@ const SighUp = () => {
       setErrorMessage({ ...errorMessage, passwordError: '필수요소:(' });
       return;
     }
-    console.log('회원가입완료:)');
+    localStorage.setItem(
+      'User',
+      JSON.stringify({ userName: userName, emailOrPhone: emailOrPhone, password: password, introduction: introduction })
+    );
   };
   const navigateHome = useCallback(() => navigate('/'), [navigate]);
   return (
