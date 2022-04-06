@@ -1,0 +1,11 @@
+{
+  "headers": {
+    "Vary": "Origin",
+    "Content-Type": "application/json",
+    "Content-Length": "308"
+  },
+  "result": {
+    "isLogin": "true",
+    "token": "eyJhbxxxxxxx"
+  }
+}

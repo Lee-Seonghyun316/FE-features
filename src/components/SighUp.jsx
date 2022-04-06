@@ -131,9 +131,9 @@ const SighUp = () => {
             />
           </Label>
         </div>
-        <SignUpButton onClick={handleClickSignUp} disable={checkValidation()}>
+        <Button onClick={handleClickSignUp} disable={checkValidation()}>
           회원가입
-        </SignUpButton>
+        </Button>
       </Form>
     </Wrap>
   );
@@ -165,6 +165,7 @@ const Label = styled.label`
 const inputStyle = css`
   border: 1px solid ${({ theme }) => theme.color.grey};
   margin: 1rem 0;
+  padding: 0.5rem;
 `;
 
 const Input = styled.input`
@@ -178,7 +179,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-const SignUpButton = styled.button`
+const Button = styled.button`
   background-color: ${({ disable, theme }) => (disable ? theme.color.grey : theme.color.purple)};
   color: ${({ theme }) => theme.color.white};
   cursor: pointer;
@@ -187,4 +188,5 @@ const SignUpButton = styled.button`
   padding: 1rem;
   font-weight: 700;
   font-size: ${({ theme }) => theme.fontSize.xSmall};
+  margin-top: 2rem;
 `;

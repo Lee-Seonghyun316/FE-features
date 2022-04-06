@@ -18,7 +18,7 @@ const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 10vw;
+  padding: 1rem 2rem;
   font-size: ${({ theme }) => theme.fontSize.middle};
   font-weight: 600;
   background-color: grey;

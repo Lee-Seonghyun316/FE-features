@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Header = ({ onClick }) => (
+const Header = ({ onClickSignUp, onClickSignIn }) => (
   <Wrap>
-    Home<Button onClick={onClick}>회원가입</Button>
+    Home
+    <div>
+      <Button onClick={onClickSignUp}>회원가입</Button>
+      <Button onClick={onClickSignIn}>로그인</Button>
+    </div>
   </Wrap>
 );
 
@@ -21,8 +25,6 @@ const Wrap = styled.div`
 `;
 const Button = styled.button`
   padding: 0.5rem 1rem;
-  border: 1px solid white;
-  border-radius: 1rem;
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.xSmall};
   cursor: pointer;

@@ -32,7 +32,7 @@ const Home = () => {
   }, [page]);
   return (
     <div>
-      <Header onClick={() => navigate('/sign-up')} />
+      <Header onClickSignUp={() => navigate('/sign-up')} onClickSignIn={() => navigate('/sign-in')} />
       <Items>
         {data.map((item) => (
           <Item key={item.id}>
