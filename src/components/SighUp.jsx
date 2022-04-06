@@ -107,7 +107,6 @@ const SighUp = () => {
   return (
     <Wrap>
       <FormContainer>
-        {' '}
         <SubHeader text="회원가입" onClick={navigateHome} />
         <Form action="submit">
           <div>

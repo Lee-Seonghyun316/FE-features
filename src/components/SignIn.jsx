@@ -43,7 +43,6 @@ const SignIn = () => {
               if (data.result) {
                 localStorage.setItem('token', data.result.token);
               }
-              console.log(data.result);
             });
         }
       }
