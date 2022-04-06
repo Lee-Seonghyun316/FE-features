@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import SubHeader from './SubHeader';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const SighUp = () => {
   const [input, setInput] = useState({
@@ -18,34 +18,43 @@ const SighUp = () => {
   });
   const { userNameError, emailOrPhoneError, passwordError } = errorMessage;
   const navigate = useNavigate();
-  const checkUserName = (value) => {
-    if (value.length > 0) {
-      setErrorMessage({ ...errorMessage, userNameError: '' });
-    }
-  };
-  const checkEmailOrPhone = (value) => {
-    const regEmail = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-    const regPhone = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
-    if (regEmail.test(value) || regPhone.test(value)) {
-      setErrorMessage({ ...errorMessage, emailOrPhoneError: '' });
-    } else {
-      setErrorMessage({ ...errorMessage, emailOrPhoneError: '입력 형식 오류:(' });
-    }
-  };
-  const checkPassword = (value) => {
-    const regNum = /[0-9]/g;
-    const regEng = /[a-z]/gi;
-    const regSpe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
-    if (regNum.test(value) && regEng.test(value) && regSpe.test(value)) {
-      if (value.length < 8) {
-        setErrorMessage({ ...errorMessage, passwordError: '8자 이상:(' });
-      } else {
-        setErrorMessage({ ...errorMessage, passwordError: '' });
+  const checkUserName = useCallback(
+    (value) => {
+      if (value.length > 0) {
+        setErrorMessage({ ...errorMessage, userNameError: '' });
       }
-    } else {
-      setErrorMessage({ ...errorMessage, passwordError: '영문, 숫자, 특수문자 혼합:(' });
-    }
-  };
+    },
+    [errorMessage]
+  );
+  const checkEmailOrPhone = useCallback(
+    (value) => {
+      const regEmail = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+      const regPhone = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
+      if (regEmail.test(value) || regPhone.test(value)) {
+        setErrorMessage({ ...errorMessage, emailOrPhoneError: '' });
+      } else {
+        setErrorMessage({ ...errorMessage, emailOrPhoneError: '입력 형식 오류:(' });
+      }
+    },
+    [errorMessage]
+  );
+  const checkPassword = useCallback(
+    (value) => {
+      const regNum = /[0-9]/g;
+      const regEng = /[a-z]/gi;
+      const regSpe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
+      if (regNum.test(value) && regEng.test(value) && regSpe.test(value)) {
+        if (value.length < 8) {
+          setErrorMessage({ ...errorMessage, passwordError: '8자 이상:(' });
+        } else {
+          setErrorMessage({ ...errorMessage, passwordError: '' });
+        }
+      } else {
+        setErrorMessage({ ...errorMessage, passwordError: '영문, 숫자, 특수문자 혼합:(' });
+      }
+    },
+    [errorMessage]
+  );
   const handleChange = (e) => {
     const { value, id } = e.target;
     const noSpaceValue = value.replace(' ', '');
@@ -91,9 +100,10 @@ const SighUp = () => {
     }
     console.log('회원가입완료:)');
   };
+  const navigateHome = useCallback(() => navigate('/'), [navigate]);
   return (
     <Wrap>
-      <SubHeader text="회원가입" onClick={() => navigate('/')} />
+      <SubHeader text="회원가입" onClick={navigateHome} />
       <Form action="submit">
         <div>
           <Title>회원명</Title>

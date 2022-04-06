@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const SubHeader = ({ text, onClick }) => (
   <Wrap>
@@ -12,7 +13,16 @@ const SubHeader = ({ text, onClick }) => (
   </Wrap>
 );
 
-export default SubHeader;
+SubHeader.propTypes = {
+  text: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+SubHeader.defaultProps = {
+  text: '',
+};
+
+export default React.memo(SubHeader);
 
 const Wrap = styled.div`
   display: flex;

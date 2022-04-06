@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import SubHeader from './SubHeader';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
@@ -18,7 +18,7 @@ const SignIn = () => {
       [id]: noSpaceValue,
     });
   };
-  const receiveOptionResponse = (request) => {
+  const receiveOptionResponse = useCallback((request) => {
     if (request) {
       const response = {
         'Access-Control-Allow-Origin': 'http://localhost:3000',
@@ -27,46 +27,53 @@ const SignIn = () => {
       };
       return response;
     }
-  };
-  const signIn = (data) => {
-    if (data) {
-      const optionRequest = {
-        'Access-Control-Request-Method': 'POST',
-        'Access-Control-Request-Headers': ['Content-Type', 'Accept', 'Content-Length', 'Host'],
-      };
-      const optionResponse = receiveOptionResponse(optionRequest);
-      if (optionResponse) {
-        fetch('http://localhost:3000/api/authentication.json', { method: 'GET' }) //실제요청 : POST
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.result) {
-              localStorage.setItem('token', data.result.token);
-            }
-            console.log(data.result);
-          });
+  }, []);
+  const signIn = useCallback(
+    (data) => {
+      if (data) {
+        const optionRequest = {
+          'Access-Control-Request-Method': 'POST',
+          'Access-Control-Request-Headers': ['Content-Type', 'Accept', 'Content-Length', 'Host'],
+        };
+        const optionResponse = receiveOptionResponse(optionRequest);
+        if (optionResponse) {
+          fetch('http://localhost:3000/api/authentication.json', { method: 'GET' }) //실제요청 : POST
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.result) {
+                localStorage.setItem('token', data.result.token);
+              }
+              console.log(data.result);
+            });
+        }
       }
-    }
-  };
-  const handleClick = (e) => {
-    e.preventDefault();
-    const data = {
-      header: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Content-Length': '87',
-        Host: 'localhost:8080',
-      },
-      body: JSON.stringify({
-        userType: 'U',
-        emailAddr: 'kate@afoter.com',
-        passCode: 'test123456!',
-      }),
-    };
-    signIn(data);
-  };
+    },
+    [receiveOptionResponse]
+  );
+  const handleClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      const data = {
+        header: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Length': '87',
+          Host: 'localhost:8080',
+        },
+        body: JSON.stringify({
+          userType: 'U',
+          emailAddr: 'kate@afoter.com',
+          passCode: 'test123456!',
+        }),
+      };
+      signIn(data);
+    },
+    [signIn]
+  );
+  const navigateHome = useCallback(() => navigate('/'), [navigate]);
   return (
     <div>
-      <SubHeader text="로그인" onClick={() => navigate('/')} />
+      <SubHeader text="로그인" onClick={navigateHome} />
       <Form action="submit">
         <Label htmlFor="email">
           이메일주소 :

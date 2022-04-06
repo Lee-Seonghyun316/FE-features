@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Header = ({ onClickSignUp, onClickSignIn }) => (
   <Wrap>
@@ -11,7 +12,12 @@ const Header = ({ onClickSignUp, onClickSignIn }) => (
   </Wrap>
 );
 
-export default Header;
+Header.propTypes = {
+  onClickSignUp: PropTypes.func,
+  onClickSignIn: PropTypes.func,
+};
+
+export default React.memo(Header);
 
 const Wrap = styled.div`
   display: flex;
