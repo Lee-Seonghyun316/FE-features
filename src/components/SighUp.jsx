@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import Message from './Message';
 
 const SighUp = () => {
   const [input, setInput] = useState({
@@ -9,17 +8,85 @@ const SighUp = () => {
     password: '',
     introduction: '',
   });
-  const [message, setMessage] = useState('테스트');
   const { userName, emailOrPhone, password, introduction } = input;
+  const [errorMessage, setErrorMessage] = useState({
+    userNameError: '',
+    emailOrPhoneError: '',
+    passwordError: '',
+  });
+  const { userNameError, emailOrPhoneError, passwordError } = errorMessage;
+  const checkUserName = (value) => {
+    if (value.length > 0) {
+      setErrorMessage({ ...errorMessage, userNameError: '' });
+    }
+  };
+  const checkEmailOrPhone = (value) => {
+    const regEmail = /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    const regPhone = /01[016789][^0][0-9]{2,3}[0-9]{3,4}/;
+    if (regEmail.test(value) || regPhone.test(value)) {
+      setErrorMessage({ ...errorMessage, emailOrPhoneError: '' });
+    } else {
+      setErrorMessage({ ...errorMessage, emailOrPhoneError: '입력 형식 오류:(' });
+    }
+  };
+  const checkPassword = (value) => {
+    const regNum = /[0-9]/g;
+    const regEng = /[a-z]/gi;
+    const regSpe = /[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi;
+    if (regNum.test(value) && regEng.test(value) && regSpe.test(value)) {
+      if (password.length < 8) {
+        setErrorMessage({ ...errorMessage, passwordError: '8자 이상:(' });
+      } else {
+        setErrorMessage({ ...errorMessage, passwordError: '' });
+      }
+    } else {
+      setErrorMessage({ ...errorMessage, passwordError: '영문, 숫자, 특수문자 혼합:(' });
+    }
+  };
   const handleChange = (e) => {
     const { value, id } = e.target;
+    const noSpaceValue = value.replace(' ', '');
     setInput({
       ...input,
-      [id]: value,
+      [id]: id === 'introduction' ? value : noSpaceValue,
     });
+    if (id === 'userName') {
+      checkUserName(value);
+      return;
+    }
+    if (id === 'emailOrPhone') {
+      checkEmailOrPhone(value);
+      return;
+    }
+    if (id === 'password') {
+      checkPassword(value);
+      return;
+    }
+  };
+  const checkValidation = () => {
+    if (userNameError || emailOrPhoneError || passwordError) {
+      return true;
+    }
+    if (userName === '' || emailOrPhone === '' || password === '') {
+      return true;
+    }
+    return false;
   };
   const handleClickSignUp = (e) => {
     e.preventDefault();
+    if (userName === '') {
+      setErrorMessage({ ...errorMessage, userNameError: '필수요소:(' });
+      return;
+    }
+    if (emailOrPhone === '') {
+      setErrorMessage({ ...errorMessage, emailOrPhoneError: '필수요소:(' });
+      return;
+    }
+    if (password === '') {
+      setErrorMessage({ ...errorMessage, passwordError: '필수요소:(' });
+      return;
+    }
+    console.log('회원가입');
   };
   return (
     <Wrap>
@@ -27,35 +94,44 @@ const SighUp = () => {
         <ProductName>회원가입</ProductName>
         <Section>
           <Title>회원명</Title>
-          <Label htmlFor="userName">
-            20자 이내
-            <Input type="text" id="userName" value={userName} onChange={handleChange} />
+          <Label htmlFor="userName" error={userNameError}>
+            {userNameError ? userNameError : '20자 이내'}
+            <Input type="text" id="userName" value={userName} onChange={handleChange} maxLength={20} />
           </Label>
         </Section>
         <Section>
           <Title>이메일 주소 또는 폰번호</Title>
-          <Label htmlFor="emailOrPhone">
-            이메일 주소와 폰 번호 중 택 1
-            <Input type="text" id="emailOrPhone" value={emailOrPhone} onChange={handleChange} maxLength={20} />
+          <Label htmlFor="emailOrPhone" error={emailOrPhoneError}>
+            {emailOrPhoneError ? emailOrPhoneError : '이메일 주소와 폰 번호(숫자만) 중 택 1'}
+            <Input type="text" id="emailOrPhone" value={emailOrPhone} onChange={handleChange} />
           </Label>
         </Section>
         <Section>
           <Title>비밀번호</Title>
-          <Label htmlFor="password">
-            8자 이상, 영소문자/대문자, 숫자, 특수문자 조합
+          <Label htmlFor="password" error={passwordError}>
+            {passwordError ? passwordError : '8자 이상, 영소문자/대문자, 숫자, 특수문자 조합'}
             <Input type="password" id="password" value={password} onChange={handleChange} minLength={8} />
           </Label>
         </Section>
         <Section>
-          <Title>자기소개</Title>
+          <Title>자기소개(선택)</Title>
           <Label htmlFor="introduction">
             512자 이내
-            <Textarea name="introduction" id="introduction" cols="30" rows="3" maxLength={512} />
+            <Textarea
+              name="introduction"
+              id="introduction"
+              cols="30"
+              rows="3"
+              maxLength={512}
+              value={introduction}
+              onChange={handleChange}
+            />
           </Label>
         </Section>
-        <RegisterButton onClick={handleClickSignUp}>회원가입</RegisterButton>
+        <SignUpButton onClick={handleClickSignUp} disable={checkValidation()}>
+          회원가입
+        </SignUpButton>
       </Form>
-      {message && <Message text={message} />}
     </Wrap>
   );
 };
@@ -86,7 +162,7 @@ const Title = styled.h1`
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  color: ${({ theme }) => theme.color.grey};
+  color: ${({ theme, error }) => (error ? 'red' : theme.color.grey)};
 `;
 
 const inputStyle = css`
@@ -105,8 +181,8 @@ const Textarea = styled.textarea`
   }
 `;
 
-const RegisterButton = styled.button`
-  background-color: rebeccapurple;
+const SignUpButton = styled.button`
+  background-color: ${({ disable, theme }) => (disable ? theme.color.grey : theme.color.purple)};
   color: ${({ theme }) => theme.color.white};
   cursor: pointer;
   display: flex;
