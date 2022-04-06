@@ -72,25 +72,44 @@ const SignIn = () => {
   );
   const navigateHome = useCallback(() => navigate('/'), [navigate]);
   return (
-    <div>
-      <SubHeader text="로그인" onClick={navigateHome} />
-      <Form action="submit">
-        <Label htmlFor="email">
-          이메일주소 :
-          <Input type="text" id="email" value={email} onChange={handleChange} />
-        </Label>
-        <Label htmlFor="password">
-          비밀번호 :
-          <Input type="password" id="password" value={password} onChange={handleChange} />
-        </Label>
-        <Button onClick={handleClick}>로그인</Button>
-      </Form>
-    </div>
+    <Wrap>
+      <FormContainer>
+        <SubHeader text="로그인" onClick={navigateHome} />
+        <Form action="submit">
+          <Label htmlFor="email">
+            이메일주소 :
+            <Input type="text" id="email" value={email} onChange={handleChange} />
+          </Label>
+          <Label htmlFor="password">
+            비밀번호 :
+            <Input type="password" id="password" value={password} onChange={handleChange} />
+          </Label>
+          <Button onClick={handleClick}>로그인</Button>
+        </Form>
+      </FormContainer>
+    </Wrap>
   );
 };
 
 export default SignIn;
 
+const Wrap = styled.div`
+  @media ${({ theme }) => theme.device.laptop} {
+    position: relative;
+    background-color: lightgray;
+    width: 100vw;
+    height: 100vh;
+  }
+`;
+const FormContainer = styled.div`
+  @media ${({ theme }) => theme.device.laptop} {
+    position: absolute;
+    width: 30rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
 const Form = styled.form`
   background-color: white;
   display: flex;
