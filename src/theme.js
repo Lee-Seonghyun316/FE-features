@@ -13,48 +13,21 @@ const device = {
 const pixelToRem = (size) => `${size / 16}rem`;
 
 const fontSize = {
-  big: pixelToRem(35),
-  middle: pixelToRem(30),
-  small: pixelToRem(25),
-  xSmall: pixelToRem(20),
-  xxSmall: pixelToRem(15),
+  big: pixelToRem(25),
+  middle: pixelToRem(20),
+  Small: pixelToRem(15),
 };
 
 const color = {
   black: '#000',
   white: '#FFFFFF',
-};
-
-const common = {
-  flexColumn: `
-    display: flex;
-    flex-direction: column;
-  `,
-  flexCenter: `
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-  flexCenterColumn: `
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  `,
-  hideScrollBar: `
-  overflow-x: scroll;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-  ::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
-  }
-  `,
+  lightGrey: '#eeeeee',
+  grey: '#bdbdbd',
 };
 
 const theme = {
   fontSize,
   color,
-  common,
   device,
 };
 

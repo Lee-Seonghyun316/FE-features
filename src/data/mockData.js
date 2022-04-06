@@ -153,4 +153,12 @@ export const mockData = [
   { id: 98, nickname: 'Yeeles', email: 'syeeles2p@tinyurl.com', gender: 'Female', ip_address: '133.177.119.103' },
   { id: 99, nickname: 'Krause', email: 'ckrause2q@mozilla.com', gender: 'Male', ip_address: '208.21.232.1' },
   { id: 100, nickname: 'Porte', email: 'zporte2r@so-net.ne.jp', gender: 'Male', ip_address: '22.249.225.81' },
+  { id: 101, nickname: 'Erica', email: 'mn0316@naver.com', gender: 'Female', ip_address: '22.249.225.82' },
 ];
+
+export const CreateFragmentData = (page) => {
+  if (page < 0 || page > 9) {
+    return;
+  }
+  return mockData.slice(page * 10 + 1, (page + 1) * 10 + 1);
+};
